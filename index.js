@@ -10,56 +10,56 @@ const generateMarkdown = require('./generateMarkdown');
 
 const questions = [
  {
-   type: '', 
-   name: '',
-   message: '', 
+   type: 'input', 
+   name: 'title',
+   message: 'Enter your project title ', 
  }, 
  {
-    type: '', 
-    name: '',
-    message: '', 
+    type: 'input', 
+    name: 'description',
+    message: 'Please provide explanation of your project', 
   },
   {
-    type: '', 
-    name: '',
-    message: '', 
+    type: 'input', 
+    name: 'installation',
+    message: 'List installation instructions', 
   },
   {
-    type: '', 
-    name: '',
-    message: '', 
+    type: 'input', 
+    name: 'usage',
+    message: 'Provide project usage', 
   },
   {
-    type: '', 
-    name: '',
-    message: '', 
+    type: 'input', 
+    name: 'contributing',
+    message: 'Any contributions?', 
   },
   {
-    type: '', 
-    name: '',
-    message: '', 
+    type: 'input', 
+    name: 'tests',
+    message: 'List any testing instructions', 
   },
   {
-    type: '', 
-    name: '',
-    message: '', 
+    type: 'list', 
+    name: 'license',
+    message: 'Choose Correct license', 
+    choices:['MIT', 'Apache License 2.0', 'Not listed', 'None'],
   },
   {
-    type: '', 
-    name: '',
-    message: '', 
+    type: 'input', 
+    name: 'github',
+    message: 'Enter your GitHub username:', 
   },
   {
-    type: '', 
-    name: '',
-    message: '', 
+    type: 'input', 
+    name: 'email',
+    message: 'Enter your email address:', 
   },
 
 ];
-
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    fs.write(fileName, data, function(err) => {
+    fs.writefile(fileName, data, (err) => {
         if (err) {
             console.error('Error', err);
         } else {
@@ -70,7 +70,22 @@ function writeToFile(fileName, data) {
 
 // TODO: Create a function to initialize app
 function init() {
-    
+//shows questions?? 
+  inquirer.prompt(questions)
+  .then(userResponses => {
+    // Generate README 
+    const markdown = generateMarkdown(userResponses);
+
+    // Write content to a file 
+    fs.writeFileSync('README.md', markdown);
+
+    // console logs success!
+    console.log('success!');
+  })
+  .catch(error => {
+    // errors 
+    console.error('error:', error);
+  });
 }
 
 // Function call to initialize app
